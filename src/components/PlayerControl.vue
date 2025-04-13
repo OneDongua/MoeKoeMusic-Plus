@@ -1,11 +1,11 @@
 <template>
     <div class="player-container">
         <div class="progress-bar" @mousedown="onProgressDragStart" @click="updateProgressFromEvent"
-            @mousemove="updateTimeTooltip" @mouseleave="hideTimeTooltip">
+             @mousemove="updateTimeTooltip" @mouseleave="hideTimeTooltip">
             <div class="progress" :style="{ width: progressWidth + '%' }"></div>
             <div class="progress-handle" :style="{ left: progressWidth + '%' }"></div>
             <div v-for="(point, index) in climaxPoints" :key="index" class="climax-point"
-                :style="{ left: point.position + '%' }">
+                 :style="{ left: point.position + '%' }">
             </div>
             <div v-if="showTimeTooltip" class="time-tooltip" :style="{ left: tooltipPosition + 'px' }">
                 {{ tooltipTime }}
@@ -13,7 +13,7 @@
         </div>
         <div class="player-bar">
             <div class="album-art" @click="toggleLyrics">
-                <img v-if="currentSong.img" :src="currentSong.img" alt="Album Art" />
+                <img v-if="currentSong.img" :src="currentSong.img" alt="Album Art"/>
                 <i v-else class="fas fa-music"></i>
             </div>
             <div class="song-info" @click="toggleLyrics">
@@ -32,12 +32,15 @@
                 </button>
             </div>
             <div class="extra-controls">
-                <button class="extra-btn" title="桌面歌词" v-if="isElectron()" @click="desktopLyrics"><i class="fas">词</i></button>
-                <button class="extra-btn" title="我喜欢" @click="playlistSelect.toLike()"><i class="fas fa-heart"></i></button>
-                <button class="extra-btn" title="收藏至" @click="playlistSelect.fetchPlaylists()"><i class="fas fa-add"></i></button>
+                <button class="extra-btn" title="桌面歌词" v-if="isElectron()" @click="desktopLyrics"><i
+                    class="fas">词</i></button>
+                <button class="extra-btn" title="我喜欢" @click="playlistSelect.toLike()"><i class="fas fa-heart"></i>
+                </button>
+                <button class="extra-btn" title="收藏至" @click="playlistSelect.fetchPlaylists()"><i
+                    class="fas fa-add"></i></button>
                 <button class="extra-btn" @click="togglePlaybackMode">
                     <i v-if="currentPlaybackModeIndex != '2'" :class="currentPlaybackMode.icon"
-                        :title="currentPlaybackMode.title"></i>
+                       :title="currentPlaybackMode.title"></i>
                     <span v-else class="loop-icon" :title="currentPlaybackMode.title">
                         <i class="fas fa-repeat"></i>
                         <sup>1</sup>
@@ -49,20 +52,20 @@
                     <i :class="isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up'" @click="toggleMute"></i>
                     <div class="volume-slider" @mousedown="onDragStart">
                         <div class="volume-progress" :style="{ width: volume + '%' }"></div>
-                        <input type="range" min="0" max="100" v-model="volume" @input="changeVolume" />
+                        <input type="range" min="0" max="100" v-model="volume" @input="changeVolume"/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- 播放队列 -->
     <QueueList :current-song="currentSong" @add-song-to-queue="addSongToQueue" ref="queueList"/>
 
     <!-- 全屏歌词界面 -->
     <transition name="slide-up">
         <div v-if="showLyrics" class="lyrics-bg"
-            :style="(lyricsBackground == 'on' ? ({ backgroundImage: `url(${currentSong?.img || 'https://random.MoeJue.cn/randbg.php'})` }) : ({ background: 'var(--secondary-color)' }))">
+             :style="(lyricsBackground == 'on' ? ({ backgroundImage: `url(${currentSong?.img || 'https://random.MoeJue.cn/randbg.php'})` }) : ({ background: 'var(--secondary-color)' }))">
             <div class="lyrics-screen">
                 <div class="close-btn">
                     <i class="fas fa-chevron-down" @click="toggleLyrics"></i>
@@ -70,8 +73,8 @@
 
                 <div class="left-section">
                     <div class="album-art-large">
-                        <img v-if="easterEggImage" :src="easterEggImage.src" :class="easterEggClass" alt="Easter Egg" />
-                        <img :src="currentSong?.img || 'https://random.MoeJue.cn/randbg.php'" alt="Album Art" />
+                        <img v-if="easterEggImage" :src="easterEggImage.src" :class="easterEggClass" alt="Easter Egg"/>
+                        <img :src="currentSong?.img || 'https://random.MoeJue.cn/randbg.php'" alt="Album Art"/>
                     </div>
                     <div class="song-details">
                         <div class="song-title">{{ currentSong?.name }}</div>
@@ -82,11 +85,11 @@
                     <div class="progress-bar-container">
                         <span class="current-time">{{ formattedCurrentTime }}</span>
                         <div class="progress-bar" @mousedown="onProgressDragStart" @click="updateProgressFromEvent"
-                            @mousemove="updateTimeTooltip" @mouseleave="hideTimeTooltip">
+                             @mousemove="updateTimeTooltip" @mouseleave="hideTimeTooltip">
                             <div class="progress" :style="{ width: progressWidth + '%' }"></div>
                             <div class="progress-handle" :style="{ left: progressWidth + '%' }"></div>
                             <div v-for="(point, index) in climaxPoints" :key="index" class="climax-point"
-                                :style="{ left: point.position + '%' }">
+                                 :style="{ left: point.position + '%' }">
                             </div>
                             <div v-if="showTimeTooltip" class="time-tooltip" :style="{ left: tooltipPosition + 'px' }">
                                 {{ tooltipTime }}
@@ -110,7 +113,7 @@
                         </button>
                         <button class="control-btn" @click="togglePlaybackMode">
                             <i v-if="currentPlaybackModeIndex != '2'" :class="currentPlaybackMode.icon"
-                                :title="currentPlaybackMode.title"></i>
+                               :title="currentPlaybackMode.title"></i>
                             <span v-else class="loop-icon" :title="currentPlaybackMode.title">
                                 <i class="fas fa-repeat"></i>
                                 <sup>1</sup>
@@ -120,10 +123,10 @@
                 </div>
                 <div id="lyrics-container">
                     <div v-if="lyricsData.length > 0" id="lyrics"
-                        :style="{ fontSize: lyricsFontSize, transform: `translateY(${scrollAmount ? scrollAmount+'px' : '50%'})` }">
+                         :style="{ fontSize: lyricsFontSize, transform: `translateY(${scrollAmount ? scrollAmount+'px' : '50%'})` }">
                         <div v-for="(lineData, lineIndex) in lyricsData" :key="lineIndex" class="line">
                             <span v-for="(charData, charIndex) in lineData.characters" :key="charIndex" class="char"
-                                :class="{ highlight: charData.highlighted }">
+                                  :class="{ highlight: charData.highlighted }">
                                 {{ charData.char }}
                             </span>
                         </div>
@@ -140,20 +143,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted, onBeforeUnmount } from 'vue';
-import { get } from '../utils/request';
-import { useMusicQueueStore } from '../stores/musicQueue';
-import { MoeAuthStore } from '../stores/store';
-import { useI18n } from 'vue-i18n';
+import {ref, onMounted, computed, onUnmounted, onBeforeUnmount} from 'vue';
+import {get} from '../utils/request';
+import {useMusicQueueStore} from '../stores/musicQueue';
+import {MoeAuthStore} from '../stores/store';
+import {useI18n} from 'vue-i18n';
 import PlaylistSelectModal from './PlaylistSelectModal.vue';
 import QueueList from './QueueList.vue';
+
 const queueList = ref(null);
 const playlistSelect = ref(null);
 const MoeAuth = MoeAuthStore();
-const { t } = useI18n();
+const {t} = useI18n();
 const showLyrics = ref(false); // 是否显示歌词
 const isDragging = ref(false);
-const currentSong = ref({ name: '', author: '', img: '', url: '', hash: '' }); // 当前播放的音乐信息
+const currentSong = ref({name: '', author: '', img: '', url: '', hash: ''}); // 当前播放的音乐信息
 const playing = ref(false); // 是否正在播放
 const isMuted = ref(false); // 是否静音
 const volume = ref(66); // 音量初始值为 100
@@ -169,9 +173,9 @@ const lyricsBackground = ref('on');
 let currentLineIndex = 0;
 const timeoutId = ref(null);
 const playbackModes = ref([
-    { icon: 'fas fa-random', title: t('sui-ji-bo-fang') },
-    { icon: 'fas fa-refresh', title: t('lie-biao-xun-huan') },
-    { icon: '', title: t('dan-qu-xun-huan') }
+    {icon: 'fas fa-random', title: t('sui-ji-bo-fang')},
+    {icon: 'fas fa-refresh', title: t('lie-biao-xun-huan')},
+    {icon: '', title: t('dan-qu-xun-huan')}
 ]);
 const currentPlaybackModeIndex = ref(0);
 const currentPlaybackMode = computed(() => playbackModes.value[currentPlaybackModeIndex.value]);
@@ -228,9 +232,9 @@ const formatTime = (seconds) => {
     return `${minutes}:${secs.toString().padStart(2, '0')}`;
 };
 const easterEggImages = [
-    { src: './assets/images/miku.png', class: 'miku' },
-    { src: './assets/images/miku2.png', class: 'miku2' },
-    { src: './assets/images/miku3.png', class: 'miku3' }
+    {src: './assets/images/miku.png', class: 'miku'},
+    {src: './assets/images/miku2.png', class: 'miku2'},
+    {src: './assets/images/miku3.png', class: 'miku3'}
 ];
 const easterEggImage = computed(() => {
     const author = currentSong.value?.author || '';
@@ -320,7 +324,7 @@ const playSongFromQueue = (direction) => {
             do {
                 newIndex = Math.floor(Math.random() * musicQueueStore.queue.length);
             } while (playedSongsStack.value.length > 0 && newIndex === playedSongsStack.value[currentStackIndex.value]);
-            
+
             playedSongsStack.value.unshift(newIndex);
             targetIndex = newIndex;
         } else if (direction === 'next' && currentStackIndex.value < playedSongsStack.value.length - 1) {
@@ -331,11 +335,11 @@ const playSongFromQueue = (direction) => {
             do {
                 newIndex = Math.floor(Math.random() * musicQueueStore.queue.length);
             } while (playedSongsStack.value.length > 0 && newIndex === playedSongsStack.value[currentStackIndex.value]);
-            
+
             if (currentStackIndex.value < playedSongsStack.value.length - 1) {
                 playedSongsStack.value = playedSongsStack.value.slice(0, currentStackIndex.value + 1);
             }
-            
+
             playedSongsStack.value.push(newIndex);
             currentStackIndex.value = playedSongsStack.value.length - 1;
             targetIndex = newIndex;
@@ -467,9 +471,9 @@ const getPlaylistAllSongs = async (id) => {
 // 添加歌单到播放列表
 const addPlaylistToQueue = async (info, append = false) => {
     let songs = [];
-    if(!append) {
+    if (!append) {
         musicQueueStore.clearQueue();
-    }else{
+    } else {
         songs = [...musicQueueStore.queue];
     }
     const newSongs = info.map((song, index) => {
@@ -482,8 +486,8 @@ const addPlaylistToQueue = async (info, append = false) => {
             timeLength: song.timelen
         };
     });
-    
-    if(append) {
+
+    if (append) {
         songs = [...songs, ...newSongs];
     } else {
         songs = newSongs;
@@ -499,7 +503,7 @@ const addPlaylistToQueue = async (info, append = false) => {
 // 添加歌曲到队列并播放的方法
 const addSongToQueue = async (hash, name, img, author, isReset = true) => {
     const currentSongHash = currentSong.value.hash;
-    if(isElectron()){
+    if (isElectron()) {
         window.electron.ipcRenderer.send('set-tray-title', name + ' - ' + author);
     }
     try {
@@ -512,11 +516,11 @@ const addSongToQueue = async (hash, name, img, author, isReset = true) => {
         const data = {
             hash: hash
         }
-        if(!MoeAuth.isAuthenticated) data.free_part = 1;
-        if(MoeAuth.isAuthenticated && settings?.quality === 'lossless' && settings?.qualityCompatibility === 'off') data.quality = 'flac';
-        if(MoeAuth.isAuthenticated && settings?.quality === 'hires' && settings?.qualityCompatibility === 'off') data.quality = 'high';
+        if (!MoeAuth.isAuthenticated) data.free_part = 1;
+        if (MoeAuth.isAuthenticated && settings?.quality === 'lossless' && settings?.qualityCompatibility === 'off') data.quality = 'flac';
+        if (MoeAuth.isAuthenticated && settings?.quality === 'hires' && settings?.qualityCompatibility === 'off') data.quality = 'high';
 
-        const response = await get('/song/url',data);
+        const response = await get('/song/url', data);
         if (response.status !== 1) {
             currentSong.value.author = currentSong.value.name = t('huo-qu-yin-le-shi-bai');
             if (response.status == 3) {
@@ -534,7 +538,7 @@ const addSongToQueue = async (hash, name, img, author, isReset = true) => {
             addSongToQueue(hash, name, img, author, false);
             return;
         }
-        
+
         if (isReset) {
             localStorage.setItem('player_progress', 0);
             audio.currentTime = progressWidth.value = 0;
@@ -592,7 +596,7 @@ audio.addEventListener('ended', () => {
 });
 const handleAudioEvent = (event) => {
     playing.value = event.type === 'play';
-    if(isElectron()){
+    if (isElectron()) {
         window.electron.ipcRenderer.send('play-pause-action', playing.value, audio.currentTime);
     }
 };
@@ -651,7 +655,7 @@ const parseLyrics = (text) => {
                     endTime: time + ((index + 1) * duration) / lyric.length,
                     highlighted: false,
                 }));
-                return { characters };
+                return {characters};
             }
             return null;
         })
@@ -740,12 +744,15 @@ const throttledHighlight = throttle(() => {
         }
 
         if (isElectron()) {
-            if(savedConfig?.desktopLyrics === 'on'){
-                window.electron.ipcRenderer.send('lyrics-data', { currentTime: audio.currentTime, lyricsData: JSON.parse(JSON.stringify(lyricsData.value)) });
+            if (savedConfig?.desktopLyrics === 'on') {
+                window.electron.ipcRenderer.send('lyrics-data', {
+                    currentTime: audio.currentTime,
+                    lyricsData: JSON.parse(JSON.stringify(lyricsData.value))
+                });
             }
-            if(savedConfig?.apiMode === 'on'){
-                window.electron.ipcRenderer.send('server-lyrics', { 
-                    currentTime: audio.currentTime, 
+            if (savedConfig?.apiMode === 'on') {
+                window.electron.ipcRenderer.send('server-lyrics', {
+                    currentTime: audio.currentTime,
                     lyricsData: JSON.parse(JSON.stringify(originalLyrics.value)),
                     currentSong: JSON.parse(JSON.stringify(currentSong.value)),
                     duration: audio.duration
@@ -794,8 +801,8 @@ const handleVolumeScroll = (event) => {
     volume.value = Math.min(Math.max(volume.value + delta * 10, 0), 100);
     changeVolume();
 };
-const getVip = async() => {
-    if(!MoeAuth.isAuthenticated) return;
+const getVip = async () => {
+    if (!MoeAuth.isAuthenticated) return;
     const lastRequestTime = localStorage.getItem('lastVipRequestTime');
     if (lastRequestTime) {
         const now = new Date().getTime();
@@ -960,7 +967,7 @@ const updateTimeTooltip = (event) => {
 
     const rect = progressBar.getBoundingClientRect();
     const offsetX = Math.max(0, Math.min(event.clientX - rect.left, progressBar.offsetWidth));
-    
+
     const tooltipWidth = 50;
     if (offsetX < tooltipWidth / 2) {
         tooltipPosition.value = tooltipWidth / 2;
@@ -1015,7 +1022,7 @@ const changeMediaSession = (song) => {
                 title: song.name,
                 artist: song.author,
                 album: song.album,
-                artwork: [{ src: artworkSrc }]
+                artwork: [{src: artworkSrc}]
             });
         } catch (error) {
             console.error("Failed to update media session metadata:", error);
@@ -1029,7 +1036,7 @@ const checkFocus = () => {
 };
 // 处理键盘按下事件
 const handleKeyDown = (event) => {
-    if(isInputFocused.value) return;
+    if (isInputFocused.value) return;
     switch (event.code) {
         case 'Space':
             event.preventDefault();
@@ -1046,7 +1053,7 @@ const handleKeyDown = (event) => {
 
 const desktopLyrics = () => {
     let savedConfig = JSON.parse(localStorage.getItem('settings')) || {};
-    if(!savedConfig?.desktopLyrics) savedConfig.desktopLyrics = 'off';
+    if (!savedConfig?.desktopLyrics) savedConfig.desktopLyrics = 'off';
     let action = savedConfig?.desktopLyrics === 'off' ? 'display-lyrics' : 'close-lyrics';
     window.electron.ipcRenderer.send('desktop-lyrics-action', action);
     savedConfig.desktopLyrics = action === 'display-lyrics' ? 'on' : 'off';
@@ -1056,5 +1063,510 @@ const desktopLyrics = () => {
 
 
 <style scoped>
-@import '@/assets/style/PlayerControl.css';
+#lyrics-container {
+    height: 75vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 80px;
+    position: relative;
+    width: 60%;
+    text-align: center;
+}
+
+#lyrics {
+    font-size: 24px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    color: #666;
+    transition: transform 0.6s ease;
+}
+
+.line {
+    margin-bottom: 12px;
+}
+
+.char {
+    display: inline-block;
+    color: transparent;
+    background: linear-gradient(to right, var(--primary-color) 50%, #e3e3e3e8 50%);
+    background-size: 200% 100%;
+    background-position: 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: background-position 0.6s ease;
+}
+
+.highlight {
+    background-position: 0%;
+}
+
+
+.player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 82px;
+    left: 0;
+    right: 0;
+    position: fixed;
+    bottom: 0;
+    background: #FFF;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 0 0 10px 10px;
+    /*background: rgba(255, 255, 255, .7);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);*/
+    z-index: 1;
+}
+
+.player-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    /*max-width: 880px;*/
+}
+
+.album-art {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 15px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.album-art img {
+    width: 64px;
+    height: 64px;
+    border-radius: 5px;
+}
+
+.album-art i {
+    font-size: 24px;
+    color: #666;
+}
+
+.song-info {
+    flex-grow: 0;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+.song-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fa-volume-up {
+    width: 10px;
+}
+
+.artist {
+    font-size: 0.9em;
+    color: #c3c3c3;
+    width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*flex-grow: 1;*/
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 10px;
+    color: #333;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #ddd;
+    position: relative;
+    border-radius: 5px;
+    overflow: visible;
+    cursor: pointer;
+    transition: height 0.2s ease;
+}
+
+.progress-bar:hover {
+    height: 8px;
+}
+
+.progress {
+    width: 30%;
+    height: 100%;
+    background-color: var(--primary-color);
+    position: absolute;
+    transition: width 0.2s ease;
+}
+
+.progress-handle {
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 2;
+    cursor: grab;
+    pointer-events: auto;
+}
+
+.progress-bar:active .progress-handle {
+    transform: translate(-50%, -50%) scale(1.2);
+    cursor: grabbing;
+}
+
+.progress-handle.dragging,
+.progress-bar:hover .progress-handle {
+    opacity: 1;
+}
+
+.progress-bar:hover .progress {
+    background-color: var(--primary-color);
+    opacity: 0.8;
+}
+
+.extra-controls {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.extra-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 8px;
+    color: #666;
+}
+
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.volume-control i {
+    font-size: 18px;
+    color: #666;
+}
+
+.volume-slider {
+    width: 100px;
+    height: 6px;
+    background-color: #ddd;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.volume-progress {
+    height: 100%;
+    background-color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 3px;
+}
+
+/* 全屏歌词界面样式 */
+.lyrics-bg {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 99;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.lyrics-screen {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    backdrop-filter: blur(18px);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: #1616169c;
+}
+
+.close-btn {
+    position: absolute;
+    top: 30px;
+    right: 100px;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    z-index: 99;
+    text-align: right;
+    width: 100%;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    margin-top: 135px;
+}
+
+.album-art-large img {
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    z-index: 9;
+}
+
+.song-details {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.player-controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.current-time,
+.duration {
+    color: white;
+    font-size: 12px;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 2px;
+    background-color: #555;
+    border-radius: 5px;
+    margin: 0 10px;
+    position: relative;
+}
+
+.progress {
+    width: 50%;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.player-controls .control-btn {
+    color: #fff;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.volume-slider {
+    width: 100px;
+    margin-left: 10px;
+    position: relative;
+}
+
+.volume-slider input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    /* 禁止对 input 的点击事件 */
+}
+
+.volume-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4899f8;
+    cursor: pointer;
+    pointer-events: auto;
+    /* 允许 thumb 的拖动事件 */
+}
+
+.volume-slider input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4899f8;
+    cursor: pointer;
+}
+
+.album-art-large .miku {
+    position: absolute;
+    height: 419px;
+    width: 401px;
+}
+
+.album-art-large .miku2 {
+    position: absolute;
+    height: 452px;
+    width: 404px;
+}
+
+.album-art-large .miku3 {
+    position: absolute;
+    height: 563px;
+}
+
+.no-lyrics {
+    color: var(--primary-color);
+    margin: auto;
+    font-size: 2em;
+}
+
+.loop-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.loop-icon sup {
+    position: absolute;
+    font-size: 0.6em;
+}
+
+/* 全屏歌词界面的进度条样式 */
+.lyrics-screen .progress-bar {
+    flex-grow: 1;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    margin: 0 10px;
+    position: relative;
+    overflow: visible;
+    transition: height 0.2s ease;
+}
+
+.lyrics-screen .progress-bar:hover {
+    height: 7px;
+}
+
+.progress-handle.dragging {
+    opacity: 1;
+}
+
+.time-tooltip {
+    position: absolute;
+    top: -25px;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* 歌词界面的时间提示样式 */
+.lyrics-screen .time-tooltip {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+/* 高潮点的样式 */
+.climax-point {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    top: 67%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 普通界面的高潮点样式 */
+.player-container .climax-point {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 4px var(--primary-color);
+}
+
+/* 歌词界面的高潮点样式 */
+.lyrics-screen .climax-point {
+    background-color: #ff69b4;
+    box-shadow: 0 0 4px #ff69b4;
+}
+
+/* 收藏按钮 */
+.like-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.like-btn.active {
+    color: #ff4081;
+    opacity: 1;
+}
 </style>

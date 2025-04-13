@@ -420,7 +420,7 @@ const selectOption = (option) => {
     };
     actions[selectionType.value]?.();
     saveSettings();
-    if(selectionType.value != 'apiMode') closeSelection();
+    if(selectionType.value !== 'apiMode') closeSelection();
     const refreshHintTypes = ['lyricsBackground', 'lyricsFontSize', 'gpuAcceleration', 'highDpi', 'apiMode'];
     if (refreshHintTypes.includes(selectionType.value)) {
         showRefreshHint.value[selectionType.value] = true;
@@ -689,7 +689,7 @@ const openResetConfirmation = async () => {
 <style scoped>
 .settings-page {
     padding: 20px;
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, "HarmonyOS Sans", MiSans, Arial, sans-serif;
 }
 
 .setting-section {

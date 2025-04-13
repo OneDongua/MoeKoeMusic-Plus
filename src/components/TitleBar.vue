@@ -10,7 +10,7 @@
 
 <script setup>
 const isElectron = typeof window !== 'undefined' && typeof window.electron !== 'undefined';
-const isMac = isElectron && window.electron.platform == 'darwin';
+const isMac = isElectron && window.electron.platform === 'darwin';
 const closeWindow = () => window.electron.ipcRenderer.send('window-control', 'close');
 const minimizeWindow = () => window.electron.ipcRenderer.send('window-control', 'minimize');
 const maximizeWindow = () => window.electron.ipcRenderer.send('window-control', 'maximize');

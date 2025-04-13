@@ -214,7 +214,7 @@ onMounted(() => {
 
 const recommend = async () => {
     const response = await get('/everyday/recommend');
-    if (response.status == 1) {
+    if (response.status === 1) {
         songs.value = response.data.song_list;
     }
     isLoading.value = false;
@@ -222,7 +222,7 @@ const recommend = async () => {
 
 const playlist = async () => {
     const response = await get(`/top/playlist?category_id=0`);
-    if (response.status == 1) {
+    if (response.status === 1) {
         special_list.value = response.data.special_list;
     }
 }
@@ -243,7 +243,7 @@ const addAllSongsToQueue = () => {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 32px;
 }
 
 .section-title {
@@ -453,6 +453,7 @@ const addAllSongsToQueue = () => {
     color: #666;
     font-size: 14px;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -625,7 +626,7 @@ const addAllSongsToQueue = () => {
 }
 
 .play-button:hover::after {
-    border-color: none;
+    border: none;
 }
 
 .play-button::after {

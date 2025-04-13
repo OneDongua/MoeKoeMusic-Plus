@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav class="navigation">
-            <div class="navigation">
+            <div class="navigator">
                 <button class="nav-arrow" @click="goBack" :disabled="!canGoBack">
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -11,11 +11,6 @@
                 <button class="nav-arrow" @click="refreshPage">
                     <i class="fas fa-redo"></i>
                 </button>
-            </div>
-            <div class="nav-links">
-                <router-link to="/">{{ $t('shou-ye') }}</router-link>
-                <router-link to="/discover">{{ $t('fa-xian') }}</router-link>
-                <router-link to="/library">{{ $t('yin-le-ku') }}</router-link>
             </div>
             <div class="search-profile">
                 <div class="search-bar">
@@ -200,10 +195,18 @@ const isVersionLower = (current, latest) => {
     return false;
 };
 </script>
+
 <style scoped>
 .navigation {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navigator {
+    display: flex;
+    align-content: center;
 }
 
 .nav-arrow {
@@ -218,7 +221,6 @@ const isVersionLower = (current, latest) => {
 
 .nav-arrow:disabled i {
     color: #ccc;
-    cursor: not-allowed;
 }
 
 .nav-arrow i {
@@ -230,6 +232,10 @@ const isVersionLower = (current, latest) => {
     background-color: #f0f0f0;
 }
 
+.nav-arrow:disabled {
+    cursor: not-allowed;
+    background: none;
+}
 
 button {
     display: flex;
@@ -240,12 +246,6 @@ button {
     margin: 4px;
     border-radius: 25%;
     transition: .2s
-}
-
-button .svg-icon {
-    color: var(--color-text);
-    height: 16px;
-    width: 16px
 }
 
 button:first-child {
@@ -262,11 +262,12 @@ button:active {
 
 header {
     background-color: #fff;
-    padding: 15px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 24px 0 16px 0;
+    box-shadow: 4px 2px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
-    width: 100%;
-    top: 0px;
+    top: 0;
+    left: 260px;
+    right: 0;
     z-index: 9;
 }
 
@@ -276,15 +277,6 @@ header {
 .profile,
 .profile img {
     -webkit-app-region: no-drag;
-}
-
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
 .nav-links {

@@ -1,29 +1,32 @@
 <template>
-    <Header />
+    <Sidebar/>
+    <Header/>
     <main>
         <div v-if="!isOnline" class="network-status">
             网络连接已断开
         </div>
         <router-view :playerControl="playerControl"></router-view>
     </main>
-    <PlayerControl ref="playerControl" />
+    <PlayerControl ref="playerControl"/>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import {ref, onMounted, onUnmounted} from 'vue';
 import Header from "@/components/Header.vue";
 import PlayerControl from "@/components/PlayerControl.vue";
-import { setTheme, applyColorTheme } from '../utils/utils';
+import {setTheme, applyColorTheme} from '../utils/utils';
+import Sidebar from "@/components/Sidebar.vue";
+
 const playerControl = ref(null);
 const isOnline = ref(navigator.onLine);
 
 // 监听网络状态变化
 const handleNetworkChange = (online) => {
     isOnline.value = online;
-    
+
     const title = online ? '网络已连接' : '网络已断开';
     const body = online ? '您已恢复网络连接' : '请检查网络设置';
-    
+
     new Notification(title, {
         body,
         icon: './assets/images/logo.png'
@@ -43,7 +46,7 @@ onMounted(() => {
     // 添加网络状态监听
     window.addEventListener('online', () => handleNetworkChange(true));
     window.addEventListener('offline', () => handleNetworkChange(false));
-    
+
     if (Notification.permission !== 'granted') {
         Notification.requestPermission();
     }
@@ -79,7 +82,7 @@ body,
 html {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "HarmonyOS Sans", MiSans, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #FFF;
     color: var(--text-color);
     height: 100%;
@@ -99,7 +102,7 @@ main {
     min-height: calc(100vh - 80px - 188px);
     max-width: 1200px;
     margin: 0 auto;
-    margin-bottom: 150px;
+    padding-left: 260px;
     padding-top: 80px;
     padding-bottom: 150px;
 }
