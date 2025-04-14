@@ -1184,6 +1184,11 @@ const handleKeyDown = (event) => {
         case 'ArrowRight':
             playSongFromQueue('next');
             break;
+        case 'Escape':
+            if(showLyrics.value){
+                showLyrics.value = false;
+            }
+            break;
     }
 };
 
