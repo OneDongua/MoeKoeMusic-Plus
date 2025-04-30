@@ -689,7 +689,7 @@ const openResetConfirmation = async () => {
 <style scoped>
 .settings-page {
     padding: 20px;
-    font-family: -apple-system, "HarmonyOS Sans", MiSans, Arial, sans-serif;
+    font-family: -apple-system, "HarmonyOS Sans", Arial, sans-serif;
 }
 
 .setting-section {

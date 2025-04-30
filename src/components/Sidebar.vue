@@ -1,63 +1,87 @@
 <template>
-    <aside class="sidebar">
-        <div class="sidebar-content">
-            <h3>MoeKoe Music</h3>
-            <ul>
-                <li>
-                    <router-link to="/" exact-active-class="active">{{ $t('shou-ye') }}</router-link>
-                </li>
-                <li>
-                    <router-link to="/discover" exact-active-class="active">{{ $t('fa-xian') }}</router-link>
-                </li>
-                <li>
-                    <router-link to="/library" exact-active-class="active">{{ $t('yin-le-ku') }}</router-link>
-                </li>
-            </ul>
-            我的
-            <ul class="song-list">
-                <li>
-                    <a v-if="!isLoading" @click="goToCloudDrive">
-                        <img :src="`./assets/images/cloud-disk.png`" class="album-image" />
-                        <div class="album-info">
-                            <h3>我的云盘</h3>
-                            <p>(*/ω＼*)</p>
-                        </div>
-                    </a>
-                </li>
-                <li v-for="(item, index) in (selectedCategory === 0 ? userPlaylists : selectedCategory === 1 ? collectedPlaylists : collectedAlbums)"
-                    :key="index">
-                    <router-link :to="{
+    <aside>
+        <div class="logo">
+            MoeKoe Music
+        </div>
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <ul>
+                    <li>
+                        <router-link to="/" exact-active-class="active">{{ $t('shou-ye') }}</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/discover" exact-active-class="active">{{ $t('fa-xian') }}</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/library" exact-active-class="active">{{ $t('yin-le-ku') }}</router-link>
+                    </li>
+                </ul>
+                <hr />
+                <p>我的</p>
+                <ul class="song-list">
+                    <li>
+                        <a v-if="!isLoading" @click="goToCloudDrive">
+                            <img :src="`./assets/images/cloud-disk.png`" class="album-image"/>
+                            <div class="album-info">
+                                <h3>我的云盘</h3>
+                                <p>(*/ω＼*)</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li v-for="(item, index) in (userPlaylists)"
+                        :key="index">
+                        <router-link :to="{
                         path: '/PlaylistDetail',
                         query: { global_collection_id: item.list_create_gid || item.global_collection_id, listid: item.listid }
                     }">
-                        <img :src="item.pic ? $getCover(item.pic, 480) : './assets/images/live.png'"
-                            class="album-image" />
-                        <div class="album-info">
-                            <h3>{{ item.name }}</h3>
-                            <p>{{ item.count }} <span>{{ $t('shou-ge') }}</span></p>
-                        </div>
-                    </router-link>
-                </li>
-                <li>
-                    <a v-if="!isLoading" @click="createPlaylist">
-                        <i class="fas fa-plus"></i>
-                        <div class="album-info">
-                            <h3>{{ $t('chuang-jian-ge-dan') }}</h3>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+                            <img :src="item.pic ? $getCover(item.pic, 480) : './assets/images/live.png'"
+                                 class="album-image"/>
+                            <div class="album-info">
+                                <h3>{{ item.name }}</h3>
+                                <p>{{ item.count }} <span>{{ $t('shou-ge') }}</span></p>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li>
+                        <a v-if="!isLoading" @click="createPlaylist">
+                            <i class="fas fa-plus"></i>
+                            <div class="album-info">
+                                <h3>{{ $t('chuang-jian-ge-dan') }}</h3>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <hr />
+                <p>收藏的歌单</p>
+                <ul class="song-list">
+                    <li v-for="(item, index) in (collectedPlaylists)"
+                        :key="index">
+                        <router-link :to="{
+                        path: '/PlaylistDetail',
+                        query: { global_collection_id: item.list_create_gid || item.global_collection_id, listid: item.listid }
+                    }">
+                            <img :src="item.pic ? $getCover(item.pic, 480) : './assets/images/live.png'"
+                                 class="album-image"/>
+                            <div class="album-info">
+                                <h3>{{ item.name }}</h3>
+                                <p>{{ item.count }} <span>{{ $t('shou-ge') }}</span></p>
+                            </div>
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
     </aside>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { get } from '../utils/request';
-import { MoeAuthStore } from '../stores/store';
-import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+import {ref, onMounted} from 'vue';
+import {get} from '../utils/request';
+import {MoeAuthStore} from '../stores/store';
+import {useRouter} from 'vue-router';
+import {useI18n} from 'vue-i18n';
+
+const {t} = useI18n();
 const router = useRouter();
 const MoeAuth = MoeAuthStore();
 const user = ref({});
@@ -74,7 +98,7 @@ const isLoading = ref(true);
 
 const selectCategory = (index) => {
     selectedCategory.value = index;
-    router.replace({ path: '/library', query: { category: index } });
+    router.replace({path: '/library', query: {category: index}});
 };
 
 const playSong = (hash, name, img, author) => {
@@ -117,7 +141,7 @@ const getVipInfo = async () => {
 }
 
 const getlisten = async () => {
-    const historyResponse = await get('/user/listen', { type: 1 });
+    const historyResponse = await get('/user/listen', {type: 1});
     if (historyResponse.status === 1) {
         const allLists = historyResponse.data.lists;
         const shuffled = allLists.sort(() => 0.5 - Math.random());
@@ -144,7 +168,7 @@ const getplaylist = async () => {
         });
         if (playlistResponse.status === 1) {
             userPlaylists.value = playlistResponse.data.info.filter(playlist => {
-                if (playlist.name == '我喜欢') {
+                if (playlist.name === '我喜欢') {
                     localStorage.setItem('like', playlist.listid);
                 }
                 return playlist.list_create_userid === user.value.userid || playlist.name === '我喜欢';
@@ -155,7 +179,7 @@ const getplaylist = async () => {
             const collectedIds = [];
             playlistResponse.data.info.forEach(playlist => {
                 if (playlist.list_create_userid !== user.value.userid) {
-                    collectedIds.push({ list_create_listid: playlist.list_create_listid, listid: playlist.listid });
+                    collectedIds.push({list_create_listid: playlist.list_create_listid, listid: playlist.listid});
                 }
             });
             localStorage.setItem('collectedPlaylists', JSON.stringify(collectedIds));
@@ -168,7 +192,7 @@ const createPlaylist = async () => {
     const result = await window.$modal.prompt(t('qing-shu-ru-xin-de-ge-dan-ming-cheng'), '');
     if (result) {
         try {
-            const playlistResponse = await get('/playlist/add', { name: result, list_create_userid: user.value.userid });
+            const playlistResponse = await get('/playlist/add', {name: result, list_create_userid: user.value.userid});
             if (playlistResponse.status === 1) {
                 localStorage.setItem('t', Date.now());
                 getplaylist()
@@ -182,73 +206,61 @@ const createPlaylist = async () => {
 const goToCloudDrive = () => {
     router.push('/CloudDrive');
 }
-
-const goToArtistDetail = (artist) => {
-    if (!artist.singerid) return;
-    router.push({
-        path: '/PlaylistDetail',
-        query: {
-            singerid: artist.singerid,
-            unfollow: true
-        }
-    });
-};
-const signIn = async () => {
-    try {
-        const res = await get('/youth/vip');
-        if (res.status === 1) {
-            window.$modal.alert(`签到成功，获得${res.data.award_vip_hour}小时VIP时长`);
-        }
-    } catch (error) {
-        window.$modal.alert('签到失败，请勿频繁签到');
-    }
-}
-const getVip = async () => {
-    try {
-        const vipResponse = await get('/youth/day/vip');
-        if (vipResponse.status === 1) {
-            window.$modal.alert(`签到成功，获得1天畅听VIP`);
-        }
-    } catch (error) {
-        window.$modal.alert('获取VIP失败, 一天仅限一次');
-    }
-}
 </script>
 
 <style scoped>
+.logo {
+    position: fixed;
+    top: 8px;
+    height: 84px;
+    width: 260px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
 .sidebar {
     position: fixed;
-    top: 0;
+    top: 92px;
     bottom: 82px;
     left: 0;
     width: 260px;
     box-shadow: 4px 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    overscroll-behavior: contain;
 }
 
 .sidebar-content {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 8px 20px;
 }
 
 .sidebar-content ul {
-    margin-top: 4px;
-    margin-bottom: 16px;
+    margin: 0;
     list-style-type: none;
     padding: 0;
-    border-bottom: 1px solid #ccc;
+}
+
+.sidebar-content hr {
+    width: 85%;
+    margin: 8px auto;
+    border: none;
+    border-top: 1px solid #ddd;
 }
 
 .sidebar-content ul li {
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .sidebar-content ul li a {
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     padding: 10px;
     border-radius: 8px;
     transition: 0.2s ease;
@@ -271,206 +283,39 @@ const getVip = async () => {
     background-color: var(--primary-color);
 }
 
-
-.sign-in {
-    cursor: pointer;
-    color: var(--primary-color);
-    margin-left: 10px;
-    border-radius: 5px;
-    padding: 2px 8px;
-    border: 1px solid var(--primary-color);
-    font-size: 12px;
+.sidebar-content p {
+    font-size: 1rem;
+    margin: 2px 8px;
 }
 
-.library-page {
-    padding: 20px;
-}
-
-.user-level {
-    width: 50px;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-
-.section-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--primary-color);
-}
-
-.profile-section {
-    display: flex;
-    align-items: center;
-}
-
-.profile-pic {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    margin-right: 15px;
-}
-
-.favorite-section {
-    display: flex;
-    justify-content: space-between;
-}
-
-.favorite-playlist {
-    background-color: var(--background-color);
-    padding: 20px;
-    border-radius: 12px;
-    flex: 1;
-    margin-right: 20px;
-    border: 1px solid var(--secondary-color);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.playlist-info p {
+.sidebar-content .playlist-info p {
     margin: 10px 0;
 }
 
-.play-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-.play-button i {
+.sidebar-content .play-button i {
     font-size: 16px;
 }
 
-.song-list {
-    overflow-y: auto;
+.sidebar-content .song-list {
+    overflow: auto;
 }
 
-.category-tabs {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.category-tabs button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #f5f5f5;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.category-tabs button.active {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.music-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-}
-
-.album-image {
+.sidebar-content .album-image {
     width: 48px;
     height: 48px;
     border-radius: 8px;
 }
 
-.album-info h3 {
+.sidebar-content .album-info h3 {
     margin: 0;
-    font-size: 16px;
-}
-
-.album-info p {
-    margin: 0;
-    color: #666;
-    font-size: 14px;
-}
-
-.song-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.album-cover {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
-.song-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 190px;
-}
-
-.album-name,
-.singer-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.album-name {
+    font-size: 1rem;
     font-weight: bold;
-    margin-bottom: -5px;
+}
+
+.sidebar-content .album-info p {
+    margin: 0;
+    color: #888;
     font-size: 14px;
-    color: #333;
 }
 
-.singer-name {
-    font-size: 12px;
-    color: #666;
-}
-
-.skeleton-loader {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.skeleton-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    width: 250px;
-    border-radius: 10px;
-    padding-left: 10px;
-    background-color: #f0f0f0;
-    height: 68px;
-}
-
-.skeleton-cover {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    border-radius: 10px;
-    background-color: #e0e0e0;
-}
-
-.skeleton-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 190px;
-}
-
-.skeleton-line {
-    height: 10px;
-    background-color: #e0e0e0;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    width: 150px;
-}
 </style>

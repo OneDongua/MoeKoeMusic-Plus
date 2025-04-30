@@ -82,7 +82,7 @@ body,
 html {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "HarmonyOS Sans", MiSans, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "HarmonyOS Sans", 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #FFF;
     color: var(--text-color);
     height: 100%;
